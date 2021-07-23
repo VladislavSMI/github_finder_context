@@ -93,6 +93,7 @@ const GithubState = (props) => {
         getUserRepos,
       }}
     >
+      {/* why do I need props.children? */}
       {props.children}
     </GithubContext.Provider>
   );
