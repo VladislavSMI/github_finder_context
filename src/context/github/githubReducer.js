@@ -4,9 +4,11 @@ import {
   CLEAR_USERS,
   GET_USER,
   GET_REPOS,
+  ADD_FAVOURITE,
+  DELETE_FAVOURITE,
 } from "../types";
 
-export default (state, action) => {
+const GithubState = (state, action) => {
   switch (action.type) {
     case SEARCH_USERS:
       return {
@@ -26,6 +28,18 @@ export default (state, action) => {
         users: [],
         loading: false,
       };
+    case ADD_FAVOURITE:
+      return {
+        ...state,
+        favourite: [...state.favourite, action.payload],
+      };
+    case DELETE_FAVOURITE:
+      return {
+        ...state,
+        favourite: state.favourite.filter(
+          (fav) => fav.login !== action.payload
+        ),
+      };
     case GET_REPOS:
       return {
         ...state,
@@ -42,3 +56,5 @@ export default (state, action) => {
       return state;
   }
 };
+
+export default GithubState;

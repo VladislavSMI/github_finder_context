@@ -7,7 +7,16 @@ import GithubContext from "../../context/github/githubContext";
 
 const User = ({ match }) => {
   const githubContext = useContext(GithubContext);
-  const { getUser, loading, user, repos, getUserRepos } = githubContext;
+  const {
+    getUser,
+    loading,
+    user,
+    repos,
+    getUserRepos,
+    addFavourite,
+    deleteFavourite,
+    favourite,
+  } = githubContext;
 
   // In request to the server we have to add empty [] so we are not constatly requesting data, we only request data if something changes
   useEffect(() => {
@@ -33,19 +42,33 @@ const User = ({ match }) => {
     hireable,
   } = user;
 
+  let existInFavourite = favourite.filter((fav) => fav.login === login);
+
   if (loading) return <Spinner />;
 
   return (
     <Fragment>
-      <Link to="/" className="btn btn-light">
-        Back To Search
-      </Link>
-      Hireable: {""}
-      {hireable ? (
-        <i className="fas fa-check text-success" />
-      ) : (
-        <i className="fas fa-times-circle text-danger" />
-      )}
+      <div className="text-center">
+        <Link to="/" className="btn btn-light">
+          Back To Search
+        </Link>
+        {existInFavourite.length === 0 ? (
+          <button
+            className="btn btn-light"
+            onClick={() => addFavourite({ login, avatar_url })}
+          >
+            Add To Favourite
+          </button>
+        ) : (
+          <button
+            className="btn btn-light"
+            onClick={() => deleteFavourite(login)}
+          >
+            Delete From Favourite
+          </button>
+        )}
+      </div>
+
       <div className="card grid-2">
         <div className="all-center">
           <img
@@ -93,6 +116,14 @@ const User = ({ match }) => {
         </div>
       </div>
       <div className="card text-center">
+        <div className="badge badge-pirmary">
+          Hireable: {""}
+          {hireable ? (
+            <i className="fas fa-check text-success" />
+          ) : (
+            <i className="fas fa-times-circle text-danger" />
+          )}
+        </div>
         <div className="badge badge-primary">Followers: {followers}</div>
         <div className="badge badge-success">Following: {following}</div>
         <div className="badge badge-light">Public Repos: {public_repos}</div>
@@ -102,6 +133,5 @@ const User = ({ match }) => {
     </Fragment>
   );
 };
-
 
 export default User;

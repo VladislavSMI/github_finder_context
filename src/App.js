@@ -10,6 +10,7 @@ import User from "./components/users/User";
 import Alert from "./components/layout/Alert";
 import About from "./components/pages/About";
 import NotFound from "./components/pages/NotFound";
+import { Favourite } from "./components/pages/Favourite";
 
 import "./App.css";
 
@@ -24,6 +25,7 @@ const App = () => {
               <Alert />
               <Switch>
                 <Route exact path="/" component={Home} />
+                <Route exact path="/favourite" component={Favourite} />
                 <Route exact path="/about" component={About} />
                 <Route exact path="/user/:login" component={User} />
                 {/* Not found component has to be at the end => why? */}

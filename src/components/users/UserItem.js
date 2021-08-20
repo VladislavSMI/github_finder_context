@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-const UserItem = ({ user: { login, avatar_url, html_url } }) => {
+const UserItem = ({ user: { login, avatar_url } }) => {
   // it is functional component so we don't need render, before functional components were used for components without state, but now with hooks, they can be used as well for state
   // Original destructuring => now it is destructured even further in arguments
   // const { login, avatar_url, html_url } = props.user;
